@@ -25,7 +25,7 @@ public class ScoreBoard {
         System.out.println(highScore);
     }
 
-    private SortedArray<ScoreRecord> scoreRecordsArray;
+    private final SortedArray<ScoreRecord> scoreRecordsArray;
 
     public ScoreBoard(int capacity) {
         scoreRecordsArray = new SortedArray<>(capacity);
@@ -49,6 +49,11 @@ public class ScoreBoard {
      */
     public ScoreRecord[] getScoreRecordsArray() {
         return scoreRecordsArray.getArray();
+    }
+
+    public boolean removeHighestScore() {
+        scoreRecordsArray.removeMost();
+        return true;
     }
 
 }

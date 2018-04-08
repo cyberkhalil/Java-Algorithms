@@ -59,13 +59,6 @@ public class SortedArray<E extends Comparable<E>> {
     }
 
     /**
-     * @param size the size to set
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    /**
      * adding Item by Insertion sort algorithm
      *
      * @param item
@@ -137,6 +130,10 @@ public class SortedArray<E extends Comparable<E>> {
             }
         }
         return false;
+    }
+
+    public void removeMost() {
+        array = shiftUnitToLeft(array, 0, size - 1);
     }
 
     /**

@@ -22,5 +22,8 @@ public class SortedArrayTest {
         mySortedArray.remove(0);
         mySortedArray.remove(1);
         System.out.println(mySortedArray);
+        System.out.println("Size :" + mySortedArray.getSize());
+        mySortedArray.removeMost();
+        System.out.println(mySortedArray);
     }
 }

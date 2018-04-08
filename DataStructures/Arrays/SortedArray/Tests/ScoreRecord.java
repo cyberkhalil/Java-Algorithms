@@ -2,8 +2,8 @@ package DataStructures.Arrays.SortedArray.Tests;
 
 public class ScoreRecord implements Comparable<ScoreRecord> {
 
-    private int score;
-    private String name;
+    private final int score;
+    private final String name;
 
     public ScoreRecord(int score, String name) {
         this.score = score;
