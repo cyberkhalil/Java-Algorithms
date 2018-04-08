@@ -1,6 +1,6 @@
 package DataStructures.Arrays.SortedArray.Implementaion;
 
-public class ScoreRecord {
+public class ScoreRecord implements Comparable<ScoreRecord> {
 
     private int score;
     private String name;
@@ -27,6 +27,11 @@ public class ScoreRecord {
      */
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(ScoreRecord o) {
+        return this.score - o.score;
     }
 
 }
