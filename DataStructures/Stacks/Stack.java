@@ -1,7 +1,5 @@
 package DataStructures.Stacks;
 
-import javax.swing.JOptionPane;
-
 public class Stack<T> {
 
     private T items[];
