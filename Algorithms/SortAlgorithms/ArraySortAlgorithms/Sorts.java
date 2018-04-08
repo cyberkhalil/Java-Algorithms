@@ -2,7 +2,7 @@ package Algorithms.SortAlgorithms.ArraySortAlgorithms;
 
 public class Sorts {
 
-    public static void insertionSort(int[] array) {
+    public static int[] insertionSort(int[] array) {
         for (int i = 1; i < array.length; i++) {
             int temp = array[i];
             for (int j = i; j > 0; j--) {
@@ -14,6 +14,7 @@ public class Sorts {
                 }
             }
         }
+        return array;
     }
 
     private Sorts() {

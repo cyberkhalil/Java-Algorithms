@@ -1,4 +1,4 @@
-package DataStructures.Arrays.SortedArray.Implementaion;
+package DataStructures.Arrays.SortedArray.Tests;
 
 import DataStructures.Arrays.SortedArray.SortedArray;
 import java.util.Random;

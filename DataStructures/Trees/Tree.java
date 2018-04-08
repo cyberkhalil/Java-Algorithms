@@ -10,33 +10,6 @@ import java.util.ArrayList;
  */
 public class Tree<E> {
 
-    public static void main(String[] args) {
-        // pre order
-        System.out.println("Pre Order Tree");
-        Tree mytree = new Tree("Book");
-        mytree.add2root("Title");
-        mytree.add2root("Introduction");
-        mytree.add2root("Chapter 1");
-        mytree.addToNode(2, "Section 1");
-        mytree.addToNode(2, "Section 2");
-        mytree.add2root("Chapter 2");
-        mytree.addToNode(3, "Section 1");
-        mytree.addToNode(3, "Section 2");
-        mytree.addToNode(3, "Section 3");
-        mytree.add2root("Chapter 3");
-        System.out.println(mytree.preOrder());
-        // in order
-        System.out.println("In order Tree");
-        mytree = new Tree("+");
-        mytree.add2root("*");
-        mytree.addToNode(0, "1");
-        mytree.addToNode(0, "2");
-        mytree.add2root("-");
-        mytree.addToNode(1, "5");
-        mytree.addToNode(1, "3");
-        System.out.println(mytree.inOrder());
-    }
-
     private Node root;
 
     /**

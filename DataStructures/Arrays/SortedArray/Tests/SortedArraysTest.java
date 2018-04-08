@@ -1,4 +1,4 @@
-package DataStructures.Arrays.SortedArray.Implementaion;
+package DataStructures.Arrays.SortedArray.Tests;
 
 import DataStructures.Arrays.SortedArray.SortedArray;
 
@@ -6,7 +6,7 @@ import DataStructures.Arrays.SortedArray.SortedArray;
  *
  * @author khalil2535
  */
-public class TestSortedArrays {
+public class SortedArraysTest {
 
     public static void main(String[] args) {
         SortedArray<Integer> mySortedArray = new SortedArray<>(5);

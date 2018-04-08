@@ -1,7 +1,5 @@
 package DataStructures.Queues;
 
-import java.util.Arrays;
-
 /**
  *
  * @author khalil2535
@@ -10,8 +8,8 @@ import java.util.Arrays;
 public class Deque<E> {
 
     int capi;
-    E[] items;
-    int size;
+    private E[] items;
+    private int size;
     /**
      * Forward Pointer
      */
@@ -21,32 +19,6 @@ public class Deque<E> {
      */
     int bP;
 
-    /*
-    public static void main(String[] args) {
-        Deque x = new Deque(10);
-        x.addFirst("a");
-        x.addFirst("b");
-        x.addFirst("c");
-        x.addFirst("d");
-        x.addFirst("e");
-        x.addFirst("f");
-        x.addLast("1");
-        x.addLast("2");
-        x.addLast("3");
-        x.addLast("4");
-        x.addLast("5"); // can't add it return false
-        System.out.println(x);
-        System.out.println(x.getFirst());
-        System.out.println(x.getLast());
-        for (int i = 0; i < 2; i++) {
-        x.removeFirst();
-        }
-        for (int i = 0; i < 8; i++) {
-            x.removeLast();
-        }
-        System.out.println(x);
-    }
-     */
     public Deque(int capi) {
         items = (E[]) new Object[capi];
         this.capi = capi;
@@ -60,13 +32,13 @@ public class Deque<E> {
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return getSize() == 0;
     }
 
     public E getFirst() {
         if (!isEmpty()) {
-            if (items[fP] != null) {
-                return items[fP];
+            if (getItems()[fP] != null) {
+                return getItems()[fP];
             } else {
                 fP = ((fP - 1) + capi) % capi;
                 return getFirst();
@@ -78,8 +50,8 @@ public class Deque<E> {
 
     public E getLast() {
         if (!isEmpty()) {
-            if (items[bP] != null) {
-                return items[bP];
+            if (getItems()[bP] != null) {
+                return getItems()[bP];
             } else {
                 bP = ((bP - 1) + capi) % capi;
                 return getFirst();
@@ -114,13 +86,13 @@ public class Deque<E> {
     }
 
     public boolean isFull() {
-        return capi == size;
+        return capi == getSize();
     }
 
     public boolean removeFirst() {
         if (!isEmpty()) {
             fP = ((fP - 1) + capi) % capi;
-            if (items[fP] != null) {
+            if (getItems()[fP] != null) {
                 items[fP] = null;
                 size--;
                 return true;
@@ -135,7 +107,7 @@ public class Deque<E> {
     public boolean removeLast() {
         if (!isEmpty()) {
             bP = (bP + 1) % capi;
-            if (items[bP] != null) {
+            if (getItems()[bP] != null) {
                 items[bP] = null;
                 size--;
                 return true;
@@ -156,7 +128,11 @@ public class Deque<E> {
 
     @Override
     public String toString() {
-        return Arrays.toString(items);
+        return java.util.Arrays.toString(getItems());
+    }
+
+    public E[] getItems() {
+        return items;
     }
 
 }

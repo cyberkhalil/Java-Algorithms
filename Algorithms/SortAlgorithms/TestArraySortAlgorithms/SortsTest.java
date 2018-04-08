@@ -6,7 +6,7 @@ import static Algorithms.SortAlgorithms.ArraySortAlgorithms.Sorts.insertionSort;
  *
  * @author khalil2535
  */
-public class TestSorts {
+public class SortsTest {
 
     public static void main(String[] args) {
         int[] array = new int[5];
@@ -15,8 +15,7 @@ public class TestSorts {
             array[i] = ran.nextInt(5);
         }
         System.out.println("unsorted: " + java.util.Arrays.toString(array));
-        insertionSort(array);
-        System.out.println("sorted  : " + java.util.Arrays.toString(array));
+        System.out.println("sorted  : " + java.util.Arrays.toString(insertionSort(array)));
 
     }
 }

@@ -3,46 +3,24 @@ package DataStructures.Trees;
 /**
  *
  * @author khalil2535
- * @param <Sortable> Item
+ * @param <E>
  */
-public class BinaryTree<Sortable> {
+public class BinaryTree<E extends Comparable<E>> {
 
-    public static void main(String[] args) {
-        Student s1 = new Student("s1", 18);
-        Student s2 = new Student("s2", 20);
-        Student s3 = new Student("s3", 19);
-        Student s4 = new Student("s4", 22);
-        Student s5 = new Student("s5", 15);
-        Student s6 = new Student("s6", 25);
-        Student s7 = new Student("s7", 21);
-        BinaryTree b = new BinaryTree(s1);
-        b.addItem(s2);
-        b.addItem(s3);
-        b.addItem(s4);
-        b.addItem(s5);
-        b.addItem(s6);
-        b.addItem(s7);
-        System.out.println("Before Delete :-");
-        System.out.println(b);
-        System.out.println("After Delete :-");
-        b.deleteItem(s7);
-        System.out.println(b);
-    }
+    private Node<E> root;
 
-    private Node root;
-
-    public BinaryTree(Sortable rootItem) {
-        root = new Node(rootItem);
+    public BinaryTree(E rootItem) {
+        root = new Node<>(rootItem);
     }
 
     public BinaryTree() {
     }
 
-    public boolean deleteItem(Sortable item) {
+    public boolean deleteItem(E item) {
         if (FindItem(item)) {   // To be sure that there is a parent
             String wantedNodeDirection = "";
-            Node parentForWantedNode = GetParentNode(item);
-            Node wantedNode = GetNode(item);
+            Node<E> parentForWantedNode = GetParentNode(item);
+            Node<E> wantedNode = GetNode(item);
             if (parentForWantedNode != null && parentForWantedNode.hasLeftNode() && parentForWantedNode.getLeft() == wantedNode) {
                 wantedNodeDirection = "L";
             } else if (parentForWantedNode != null && parentForWantedNode.hasRightNode() && parentForWantedNode.getRight() == wantedNode) {
@@ -178,22 +156,22 @@ public class BinaryTree<Sortable> {
         return getTreeAsString(root, " ");
     }
 
-    public boolean addItem(Sortable item) {
+    public boolean addItem(E item) {
         if (root == null) {
-            root = new Node(item);
+            root = new Node<>(item);
         } else {
-            Node curentNode = root;
+            Node<E> curentNode = root;
             boolean placeFound = false;
             while (!placeFound) {
-                if (item.getSortBy() > ((Sortable) curentNode.getItem()).getSortBy()) {
+                if (item.compareTo(curentNode.getItem()) > 0) {
                     if (!curentNode.hasRightNode()) {
-                        return curentNode.setRight(new Node(item));
+                        return curentNode.setRight(new Node<>(item));
                     } else {
                         curentNode = curentNode.getRight();
                     }
                 } else {
                     if (!curentNode.hasLeftNode()) {
-                        return curentNode.setLeft(new Node(item));
+                        return curentNode.setLeft(new Node<>(item));
                     } else {
                         curentNode = curentNode.getLeft();
                     }
@@ -209,17 +187,17 @@ public class BinaryTree<Sortable> {
      * @return true if the item found in the tree or false if the item not found
      * in the tree
      */
-    public boolean FindItem(Sortable item) {
+    public boolean FindItem(E item) {
         if (root == null) {
             return false;
         } else if (root.getItem() != item) {
-            Node curentNode = root;
+            Node<E> curentNode = root;
             boolean placeFound = false;
             while (!placeFound) {
-                if (item.getSortBy() > ((Sortable) curentNode.getItem()).getSortBy()) {
+                if (item.compareTo(curentNode.getItem()) > 0) {
                     if (curentNode.hasRightNode()) {
                         if (curentNode.getRight().getItem() == item) {
-                            return placeFound = true;
+                            return true;
                         } else {
                             curentNode = curentNode.getRight();
                         }
@@ -229,7 +207,7 @@ public class BinaryTree<Sortable> {
                 } else {
                     if (curentNode.hasLeftNode()) {
                         if (curentNode.getLeft().getItem() == item) {
-                            return placeFound = true;
+                            return true;
                         } else {
                             curentNode = curentNode.getLeft();
                         }
@@ -238,20 +216,20 @@ public class BinaryTree<Sortable> {
                     }
                 }
             }
-            return false; // i don't know why ._.
+            return false;
         } else {
             return true;
         }
     }
 
-    private Node GetNode(Sortable item) {
+    private Node<E> GetNode(E item) {
         if (root == null) {
             return null;
         } else {
-            Node curentNode = root;
+            Node<E> curentNode = root;
             boolean placeFound = false;
             while (!placeFound) {
-                if (item.getSortBy() > ((Sortable) curentNode.getItem()).getSortBy()) {
+                if (item.compareTo(curentNode.getItem()) > 0) {
                     if (curentNode.hasRightNode()) {
                         if (curentNode.getRight().getItem() == item) {
                             return curentNode.getRight();
@@ -261,7 +239,7 @@ public class BinaryTree<Sortable> {
                     } else {
                         return null;
                     }
-                } else if (item.getSortBy() < ((Sortable) curentNode.getItem()).getSortBy()) {
+                } else if (item.compareTo(curentNode.getItem()) < 0) {
                     if (curentNode.hasLeftNode()) {
                         if (curentNode.getLeft().getItem() == item) {
                             return curentNode.getLeft();
@@ -280,14 +258,14 @@ public class BinaryTree<Sortable> {
         return null;
     }
 
-    private Node GetParentNode(Sortable item) {
+    private Node<E> GetParentNode(E item) {
         if (root == null) {
             return null;
         } else {
-            Node curentNode = root;
+            Node<E> curentNode = root;
             boolean placeFound = false;
             while (!placeFound) {
-                if (item.getSortBy() > ((Sortable) curentNode.getItem()).getSortBy()) {
+                if (item.compareTo(curentNode.getItem()) > 0) {
                     if (curentNode.hasRightNode()) {
                         if (curentNode.getRight().getItem() == item) {
                             return curentNode;
@@ -313,16 +291,16 @@ public class BinaryTree<Sortable> {
         return null;
     }
 
-    public String getItemPlace(Sortable item) {
+    public String getItemPlace(E item) {
         if (root == null) {
             return null;
         } else {
             String place = "";
-            Node curentNode = root;
+            Node<E> curentNode = root;
             boolean placeFound = false;
             while (!placeFound) {
                 place += curentNode.toString();
-                if (item.getSortBy() > ((Sortable) curentNode.getItem()).getSortBy()) {
+                if (item.compareTo(curentNode.getItem()) > 0) {
                     if (curentNode.hasRightNode()) {
                         if (curentNode.getRight().getItem() == item) {
                             place += " - R > ";
@@ -357,36 +335,36 @@ public class BinaryTree<Sortable> {
         }
     }
 
-    public Node getRoot() {
+    public Node<E> getRoot() {
         return root;
 
     }
 
-    class Node<Sortable> {
+    class Node<E extends Comparable<E>> {
 
-        private Sortable item;
-        private Node left;
-        private Node right;
+        private final E item;
+        private Node<E> left;
+        private Node<E> right;
 
-        Node(Sortable item) {
+        Node(E item) {
             this.item = item;
         }
 
-        public boolean setLeft(Node left) {
+        public boolean setLeft(Node<E> left) {
             this.left = left;
             return true;
         }
 
-        public boolean setRight(Node right) {
+        public boolean setRight(Node<E> right) {
             this.right = right;
             return true;
         }
 
-        public Node getLeft() {
+        public Node<E> getLeft() {
             return left;
         }
 
-        public Node getRight() {
+        public Node<E> getRight() {
             return right;
         }
 
@@ -398,8 +376,8 @@ public class BinaryTree<Sortable> {
         /**
          * @return the item
          */
-        public Sortable getItem() {
-            return item;
+        public E getItem() {
+            return (E) item;
         }
 
         public String getAllTreeString() {
@@ -431,7 +409,7 @@ public class BinaryTree<Sortable> {
             return hasRightNode() || hasLeftNode();
         }
 
-        public Node getChild() {
+        public Node<E> getChild() {
             if (hasRightNode()) {
                 return this.getRight();
             } else if (hasLeftNode()) {
@@ -441,48 +419,4 @@ public class BinaryTree<Sortable> {
             }
         }
     }
-
-    @FunctionalInterface
-    interface Sortable {
-
-        public int getSortBy();
-
-    }
-
-}
-
-class Student implements BinaryTree.Sortable {
-
-    private String name;
-    private int age;
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    @Override
-    public int getSortBy() {
-        return getAge();
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @return the age
-     */
-    public int getAge() {
-        return age;
-    }
-
-    @Override
-    public String toString() {
-        return getName() + ": " + getAge();
-    }
-
 }
