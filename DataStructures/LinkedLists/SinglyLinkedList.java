@@ -16,19 +16,38 @@ public class SinglyLinkedList<E> {
         this.head = new Node<>(item);
     }
 
-    public E remove() {
+    public E removeFirst() {
         Node<E> removed = head;
         head = head.getNext();
         size--;
+        if (tail == removed) {
+            tail = null;
+        }
         return removed.getItem();
+    }
+
+    /**
+     * @deprecated
+     */
+    public E removeLast() {
+        if (size >= 1) {
+            return removeFirst();
+        } else {
+            Node<E> removed = head;
+
+            while (removed.getNext().getNext() != null) {
+                removed = removed.getNext();
+            }
+            tail = removed;
+            size--;
+            return removed.getNext().getItem();
+        }
     }
 
     public void insertLast(E item) {
         Node<E> node = new Node<>(item);
-        if (size == 0) {
-            this.head = node;
-            this.tail = node;
-            this.size++;
+        if (head == null || size == 0) {
+            insertFirst(item);
         } else {
             this.tail.setNext(node);
             this.tail = node;
@@ -63,31 +82,32 @@ public class SinglyLinkedList<E> {
         }
         return all;
     }
-}
 
-class Node<E> {
+    class Node<E> {
 
-    private final E item;
-    private Node<E> next;
+        private final E item;
+        private Node<E> next;
 
-    Node(E item) {
-        this.item = item;
+        Node(E item) {
+            this.item = item;
+        }
+
+        public Node<E> getNext() {
+            return next;
+        }
+
+        public void setNext(Node<E> next) {
+            this.next = next;
+        }
+
+        public E getItem() {
+            return item;
+        }
+
+        @Override
+        public String toString() {
+            return item.toString();
+        }
     }
 
-    public Node<E> getNext() {
-        return next;
-    }
-
-    public void setNext(Node<E> next) {
-        this.next = next;
-    }
-
-    public E getItem() {
-        return item;
-    }
-
-    @Override
-    public String toString() {
-        return item.toString();
-    }
 }

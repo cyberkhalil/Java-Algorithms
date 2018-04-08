@@ -4,53 +4,54 @@ package DataStructures.LinkedLists;
  * Sorted LinkedList but Integer data type only
  *
  * @author khalil2535
+ * @param <E>
  */
-public class SortedLinkedList {
+public class SortedLinkedList<E extends Comparable<E>> {
 
-    private Node root;
+    private Node<E> root;
 
-    public SortedLinkedList(int firstNumber) {
-        root = new Node(firstNumber);
+    public SortedLinkedList(E firstItem) {
+        root = new Node<>(firstItem);
     }
 
     public SortedLinkedList() {
         root = null;
     }
 
-    public void addNumber(int number) {
+    public void add(E Item) {
         if (root != null) {
-            Node currentNode = root;
-            if (root.getNumber() < number) {
-                root = new Node(number);
+            Node<E> currentNode = root;
+            if (root.getItem().compareTo(Item) < 0) {
+                root = new Node<>(Item);
                 root.setNext(currentNode);
             } else {
                 while (currentNode.hasNext()) {
-                    if (currentNode.getNext().getNumber() < number) {
-                        Node newNode = new Node(number);
+                    if (currentNode.getNext().getItem().compareTo(Item) < 0) {
+                        Node<E> newNode = new Node<>(Item);
                         newNode.setNext(currentNode.getNext());
                         currentNode.setNext(newNode);
                         return;
                     }
                     currentNode = currentNode.getNext();
                 }
-                currentNode.setNext(new Node(number));
+                currentNode.setNext(new Node<>(Item));
             }
         } else {
-            root = new Node(number);
+            root = new Node<>(Item);
         }
     }
 
-    public boolean removeNumber(int number) {
+    public boolean remove(E item) {
         if (root == null) {
             return false;
         } else {
-            Node currentNode = root;
-            if (currentNode.getNumber() == number) {
+            Node<E> currentNode = root;
+            if (currentNode.getItem().compareTo(item) == 0) {
                 root = root.getNext();
                 return true;
             } else {
                 while (currentNode.hasNext()) {
-                    if (currentNode.getNext().getNumber() == number) {
+                    if (currentNode.getNext().getItem().compareTo(item) == 0) {
                         currentNode.setNext(currentNode.getNext().getNext());
                         return true;
                     }
@@ -64,7 +65,7 @@ public class SortedLinkedList {
     @Override
     public String toString() {
         if (root != null) {
-            Node currentNode = root;
+            Node<E> currentNode = root;
             String allString = "";
             do {
                 if (!allString.isEmpty()) {
@@ -79,43 +80,43 @@ public class SortedLinkedList {
         }
     }
 
-    class Node {
+    class Node<E extends Comparable<E>> {
 
-        private final int number;
-        private Node next;
+        private final E item;
+        private Node<E> next;
 
-        Node(int number) {
-            this.number = number;
+        Node(E item) {
+            this.item = item;
         }
 
         /**
          * @return the next
          */
-        public Node getNext() {
+        public Node<E> getNext() {
             return next;
         }
 
         /**
          * @param next the next to set
          */
-        public void setNext(Node next) {
+        public void setNext(Node<E> next) {
             this.next = next;
         }
 
         /**
          * @return the number
          */
-        public int getNumber() {
-            return number;
-        }
-
-        @Override
-        public String toString() {
-            return number + " ";
+        public E getItem() {
+            return item;
         }
 
         public boolean hasNext() {
             return next != null;
+        }
+
+        @Override
+        public String toString() {
+            return item + " ";
         }
 
     }

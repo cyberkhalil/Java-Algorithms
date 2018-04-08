@@ -2,100 +2,95 @@ package DataStructures.LinkedLists;
 
 /**
  * @author khalil2535
+ * @param <E>
  */
-public class CirclyLinkedList {
+public class CirclyLinkedList<E> {
 
-    private Node head;
-    private Node tail;
+    private Node<E> head;
+    private Node<E> tail;
     private int size;
 
     public CirclyLinkedList() {
         size = 0;
     }
 
+    public CirclyLinkedList(E item) {
+        tail = new Node<>(item);
+        head = tail;
+        head.ConnectTo(tail);
+        size = 1;
+    }
+
+    public CirclyLinkedList(E head, E tail) {
+        if (head != null) {
+            this.head = new Node<>(head);
+            this.tail = new Node<>(tail);
+            size = head == tail ? 1 : 2;
+            this.head.ConnectTo(this.tail);
+        }
+    }
+
     public void removeFirst() {
         if (size > 1) {
             head = head.getNext();
-            tail.setNext(head);
+            tail.ConnectTo(head);
             size--;
-        } else if (size > 0) {
+        } else if (size == 1) {
             head = null;
             tail = null;
+            size--;
         } else {
             throw new UnsupportedOperationException("There is nothing to remove");
         }
     }
 
-    public CirclyLinkedList(Node Head, Node Tail, int Size) {
-        this.head = Head;
-        this.tail = Tail;
-        head.setNext(tail);
-        tail.setNext(head);
-        this.size = Size;
-    }
-
-    public CirclyLinkedList(Node Head, Node Tail) {
-        this.head = Head;
-        this.tail = Tail;
-        head.setNext(tail);
-        tail.setNext(head);
-
-        for (int i = 2;; i++) {
-            if (Head == null) {
-                throw new IllegalArgumentException("The Head don't reach the Tail");
-            }
-            if (Head.getNext() == Tail) {
-                size = i;
-                break;
-            } else {
-                Head = Head.getNext();
-            }
-        }
-    }
-
-    public void insert(Node node) {
+    public void insertLast(E item) {
+        Node<E> node = new Node<>(item);
         if (size == 0) {
             this.head = node;
             this.tail = node;
             this.size++;
         } else {
-            this.tail.setNext(node);
-            this.tail = node;
+            this.tail.ConnectTo(node);
+            this.tail = tail.getNext();
             this.size++;
         }
 
     }
 
-    public void insertFirst(Node newHead) {
+    public void insertFirst(E head) {
+        Node<E> newHead = new Node<>(head);
         if (this.size == 0) {
             this.head = newHead;
             this.tail = newHead;
+            this.tail.ConnectTo(this.head);
             this.size++;
         } else {
-            newHead.setNext(this.head);
+            newHead.ConnectTo(this.head);
             this.head = newHead;
             this.size++;
         }
     }
 
-    public void insertAfter(Node previousNode, Node newNode) {
-        if (head.toString().equals(previousNode.toString())) {
-            newNode.setNext(head.getNext());
+    public void insertAfter(E previousItem, E newItem) {
+        Node<E> newNode = new Node<>(newItem);
+        if (head.getItem().equals(previousItem)) {
+            newNode.ConnectTo(head.getNext());
             this.head.setNext(newNode);
             this.size++;
             if (this.tail == null) {
                 this.tail = newNode;
             }
         } else {
-            Node currentNode = head.getNext();
-            while (!currentNode.getNext().toString().equals(previousNode.toString())) {
+            Node<E> currentNode = head.getNext();
+            while (!currentNode.getNext().getItem().equals(previousItem)) {
                 if (currentNode.getNext() == null) {
                     throw new IllegalArgumentException("There is no node equal previosNode");
                 }
                 currentNode = currentNode.getNext();
             }
-            newNode.setNext(currentNode.getNext());
-            currentNode.setNext(newNode);
+            newNode.ConnectTo(currentNode.getNext());
+            currentNode.ConnectTo(newNode);
             size++;
             if (newNode.getNext() == null) {
                 tail = newNode;
@@ -107,7 +102,7 @@ public class CirclyLinkedList {
     @Override
     public String toString() {
         String all = "↱> ";
-        Node currentnode = head;
+        Node<E> currentnode = head;
         while (true) {
             all += currentnode.toString();
             currentnode = currentnode.getNext();
@@ -115,9 +110,11 @@ public class CirclyLinkedList {
                 all += " -> ";
             } else {
                 all += " <↰";
+                int Length = all.length();
                 all += "\n";
-                for (int i = 0; i < size; i++) {
-                    all += "⇋⇋⇋⇋⇋⇋⇋⇋⇋";
+                while (Length != 0) {
+                    all += "⇋";
+                    Length--;
                 }
                 break;
             }
@@ -125,35 +122,48 @@ public class CirclyLinkedList {
         return all;
     }
 
-    static class Node {
+    class Node<E> {
 
-        String name;
-        Node next;
-        Node previous;
+        private final E item;
+        private Node<E> next;
+        private Node<E> previous;
 
-        public Node getNext() {
+        Node(E item) {
+            this.item = item;
+            next = null;
+            previous = null;
+        }
+
+        public Node<E> getNext() {
             return next;
         }
 
-        public Node getPrevious() {
+        public Node<E> getPrevious() {
             return previous;
         }
 
-        public void setPrevious(Node previous) {
+        public void setPrevious(Node<E> previous) {
             this.previous = previous;
         }
 
-        public Node(String node_Name) {
-            name = node_Name;
+        public void setNext(Node<E> next) {
+            this.next = next;
         }
 
-        public void setNext(Node next) {
+        public void ConnectTo(Node<E> next) {
             this.next = next;
+            if (next != null) {
+                next.setPrevious(this);
+            }
+        }
+
+        public E getItem() {
+            return item;
         }
 
         @Override
         public String toString() {
-            return name;
+            return getItem().toString();
         }
     }
 }
