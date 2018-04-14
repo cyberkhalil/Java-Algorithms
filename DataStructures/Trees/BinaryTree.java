@@ -18,7 +18,7 @@ public class BinaryTree<E extends Comparable<E>> {
 
     public boolean deleteItem(E item) {
         if (FindItem(item)) {   // To be sure that there is a parent
-            String wantedNodeDirection = "";
+            String wantedNodeDirection;
             Node<E> parentForWantedNode = GetParentNode(item);
             Node<E> wantedNode = GetNode(item);
             if (parentForWantedNode != null && parentForWantedNode.hasLeftNode() && parentForWantedNode.getLeft() == wantedNode) {
@@ -45,7 +45,7 @@ public class BinaryTree<E extends Comparable<E>> {
                         root = wantedNode.getRight();
                         return true;
                     } else {    // Case 3
-                        Node searchedNode = wantedNode.getLeft().getRight();
+                        Node<E> searchedNode = wantedNode.getLeft().getRight();
                         if (!searchedNode.hasAnyChild()) {
                             searchedNode.setLeft(wantedNode.getLeft());
                             searchedNode.setRight(wantedNode.getRight());
@@ -92,7 +92,7 @@ public class BinaryTree<E extends Comparable<E>> {
                     return parentForWantedNode.setRight(wantedNode.getRight()); // remove the parent node right
                 }
             } else { // Case 3
-                Node searchedNode = wantedNode.getLeft().getRight();
+                Node<E> searchedNode = wantedNode.getLeft().getRight();
                 if (!searchedNode.hasAnyChild()) {
                     wantedNode.getLeft().setRight(null);
                     searchedNode.setLeft(wantedNode.getLeft());
@@ -104,7 +104,7 @@ public class BinaryTree<E extends Comparable<E>> {
                     }
                     searchedNode.getChild().setLeft(wantedNode.getLeft());
                     searchedNode.getChild().setRight(wantedNode.getRight());
-                    wantedNode = searchedNode.getChild();
+                    //wantedNode = searchedNode.getChild(); not used
                     if (searchedNode.getRight().equals(searchedNode.getChild())) {
                         searchedNode.setRight(null);
                     } else {
@@ -129,31 +129,29 @@ public class BinaryTree<E extends Comparable<E>> {
      * @param s the String that will be between tree nodes
      * @return all the tree as String
      */
-    public String getTreeAsString(Node root, String s) {
+    private StringBuilder getTreeAsString(Node<E> root, String s) {
         if (root == null) {
-            return "";
+            return new StringBuilder("");
         } else {
-            String Tree = "";
-            Tree += root.toString() + "\n";
+            StringBuilder Tree = new StringBuilder("");
+            Tree.append(root.toString()).append("\n");
             if (root.hasLeftNode() && root.hasRightNode()) {
-                Tree += s + "│\n";
-                Tree += s + ("├─L─ " + getTreeAsString(root.getLeft(), s + "  "));
-                Tree += s + "│\n";
-                Tree += s + ("└─R─ " + getTreeAsString(root.getRight(), s + "  "));
+                Tree.append(s).append("│\n");
+                Tree.append(s).append("├─L─ ").append(getTreeAsString(root.getLeft(), s + "  "));
+                Tree.append(s).append("│\n");
+                Tree.append(s).append("└─R─ ").append(getTreeAsString(root.getRight(), s + "  "));
             } else if (root.hasLeftNode()) {
-                Tree += s + ("└─L─ " + getTreeAsString(root.getLeft(), s + "  "));
+                Tree.append(s).append("└─L─ ").append(getTreeAsString(root.getLeft(), s + "  "));
             } else if (root.hasRightNode()) {
-                Tree += s + ("└─R─ " + getTreeAsString(root.getRight(), s + "  "));
+                Tree.append(s).append("└─R─ ").append(getTreeAsString(root.getRight(), s + "  "));
             }
-
             return Tree;
-
         }
     }
 
     @Override
     public String toString() {
-        return getTreeAsString(root, " ");
+        return getTreeAsString(root, " ").toString();
     }
 
     public boolean addItem(E item) {
@@ -377,7 +375,7 @@ public class BinaryTree<E extends Comparable<E>> {
          * @return the item
          */
         public E getItem() {
-            return (E) item;
+            return item;
         }
 
         public String getAllTreeString() {

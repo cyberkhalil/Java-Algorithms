@@ -20,10 +20,6 @@ public class Tree<E> {
         this.root = new Node<>(item);
     }
 
-    public Tree(Node<E> root) {
-        this.root = root;
-    }
-
     public String preOrder() {
         if (root == null) {
             return "";
@@ -65,7 +61,7 @@ public class Tree<E> {
         }
     }
 
-    public boolean add2root(E item) {
+    public boolean add2Root(E item) {
         return getRoot().addChildren(item);
     }
 
