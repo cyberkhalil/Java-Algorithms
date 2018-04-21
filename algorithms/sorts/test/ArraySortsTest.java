@@ -1,13 +1,13 @@
 package algorithms.sorts.test;
 
-import static algorithms.sorts.ArraysSorts.*;
+import static algorithms.sorts.ArraySorts.*;
 import java.util.Random;
 
 /**
  *
  * @author khalil2535
  */
-public class SortsTest {
+public class ArraySortsTest {
 
     /**
      *
