@@ -23,7 +23,7 @@ public class ArraySortsTest {
         }
 
         System.out.println("unsorted: " + java.util.Arrays.toString(array));
-        bubbleSort(array);
+        insertionSort(array);
         System.out.println("sorted  : " + java.util.Arrays.toString(array));
         System.out.println("numberOfCompares :" + numberOfCompares);
         System.out.println("numberOfSwaps :" + numberOfSwaps);
