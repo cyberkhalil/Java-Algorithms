@@ -1,2 +1,2 @@
 # Java-Algorithms
-Implementation for lots of algorithm in java programing language
+Implementation for lots of algorithm in java programming language
