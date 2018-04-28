@@ -7,7 +7,7 @@ public class Queue<T> {
     private int nitems;
     private int rear;
     private int front;
-    private T[] array;
+    private final T[] array;
 
     public Queue(int capacity) {
         array = (T[]) new Object[capacity];
