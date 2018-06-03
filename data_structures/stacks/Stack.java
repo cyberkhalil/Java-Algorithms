@@ -1,8 +1,10 @@
 package data_structures.stacks;
 
+import java.util.Arrays;
+
 public class Stack<T> {
 
-    private T items[];
+    private final T items[];
     int pointer;
 
     public Stack(int capacity) {
@@ -35,7 +37,7 @@ public class Stack<T> {
         }
     }
 
-    public T showTop() {
+    public T peek() {
         if (!isEmpty()) {
             return items[pointer];
         } else {
@@ -45,6 +47,10 @@ public class Stack<T> {
 
     public int size() {
         return pointer + 1;
+    }
+
+    public int indexOf(T item) {
+        return Arrays.binarySearch(items, item);
     }
 
     @Override
